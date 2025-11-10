@@ -6,16 +6,26 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:39:08 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/07 15:17:13 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/08 22:41:42 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	printparam(t_param *p)
+{
+	printf("%d\n%d\n%d\n%d\n%d\n", p->nb_philo, p->time_die, p->time_eat,
+			p->time_sleep, p->max_eat);
+}
+
 int	main(int ac, char **av)
 {
-	(void)ac;
-	(void)av;
-	printf("test\n");
+	t_param	param;
+
+	if (ac < 5 || ac > 6)
+		return (1);
+	
+	init_param(&param, av);
+	printparam(&param);
 	return (0);
 }
