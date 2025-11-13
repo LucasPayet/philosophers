@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:39:08 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/08 22:41:42 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/13 17:20:35 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char **av)
 		return (1);
 	
 	init_param(&param, av);
-	printparam(&param);
+	print_s(&param);
+	free_param(&param);
 	return (0);
 }

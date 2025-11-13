@@ -6,25 +6,24 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 15:01:08 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/13 15:12:09 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/13 16:39:20 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_s(t_param *s)
+void	print_s(t_param *p)
 {
-	int	i;
-
-	printf("PARAM :");
-	printf("philo%-20d\n");
-	printf("time to die%-20d\n");
-	printf("time to eat%-20d\n");
-	printf("time to sleep%-20d\n");
-	printf("max eat%-20d\n");
-	i = 0;
+//	int	i;
+	printf("PARAM :\n");
+    printf("%-15s | %d\n", "philo", p->nb_philo);
+    printf("%-15s | %d\n", "time to die", p->time_die);
+    printf("%-15s | %d\n", "time to eat", p->time_eat);
+    printf("%-15s | %d\n", "time to sleep", p->time_sleep);
+    printf("%-15s | %d\n", "max eat", p->max_eat);
+	/*i = 0;
 	while (p->philo[i])
 	{
-		printf("");
-	}
+		printf("id");
+	}*/
 }

@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/13 15:13:26 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/13 17:30:05 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,20 @@ void	init_philo(t_param *p)
 	p->threads = malloc(sizeof(pthread_t) * p->nb_philo);
 	if (!p->threads)
 		printf("malloc err\n");
-	p->philo = malloc(sizeof(t_philo) * p->nb_philo + 1);
-	if (!p->philo)
+	p->philos = malloc(sizeof(t_philo) * p->nb_philo);
+	if (!p->philos)
 		printf("malloc err\n");
-	p->philo[p->nb_philo] = NULL;
 	i = 0;
 	while (i < p->nb_philo)
 	{
-		p->philo[i]->id = i + 1;
+		p->philos[i].id = i + 1;
 		i++;
 	}
 }
 
 void	init_table(t_param *p)
 {
-	p->forks = malloc(sizeof(pthread_mutex_t) * p->nb_philo);
-
+	init_philo(p);
 } 
 
 void	init_param(t_param *p, char **av)
@@ -47,5 +45,8 @@ void	init_param(t_param *p, char **av)
 		p->max_eat = ft_atoi(av[5]);
 	else
 		p->max_eat = -1;
-	init_pthreads()
+	p->threads = NULL;
+	p->philos = NULL;
+	p->forks = NULL;
+	init_philo(p);
 }
