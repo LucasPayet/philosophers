@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/13 17:30:05 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:53:25 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	init_param(t_param *p, char **av)
 	p->time_eat = ft_atoi(av[3]);
 	p->time_sleep = ft_atoi(av[4]);
 	if (av[5])
-		p->max_eat = ft_atoi(av[5]);
+		p->max_meals = ft_atoi(av[5]);
 	else
-		p->max_eat = -1;
+		p->max_meals = -1;
 	p->threads = NULL;
 	p->philos = NULL;
 	p->forks = NULL;

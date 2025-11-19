@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/13 17:20:13 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/19 22:11:57 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 
 typedef struct	s_philo
 {
-	int			id;
-	int			last_eat;
-	int			ts;
-	pthread_t	*left_fork;
-	pthread_t	*right_fork;
+	int				id;
+	int				last_eat;
+	int				ts;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 }	t_philo;
 
 typedef struct	s_parameter
@@ -32,7 +32,7 @@ typedef struct	s_parameter
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
-	int				max_eat;
+	int				max_meals;
 	pthread_t		*threads;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
