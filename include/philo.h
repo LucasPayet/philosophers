@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/19 22:11:57 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/11/28 16:47:06 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct	s_parameter
 
 /* INIT */
 void	init_param(t_param *p, char **av);
+
+/* SIMULATION */
+void	simulation(t_param *p);
 
 /* UTILS */
 int	ft_atoi(char *s);
