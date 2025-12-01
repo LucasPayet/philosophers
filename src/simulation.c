@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 03:20:10 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/01 23:29:35 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,41 @@ void	*foo(void *n)
 	return (NULL);
 }
 
+void	smart_delay(t_philo *philo)
+{
+	if (!(philo->id % 2))
+	{
+		if (philo->param->nb_philo % 2)
+		{
+			printf("%lld %d is thinking", ft_gettime(), philo->id);
+			usleep(philo->param->time_eat / 10);
+		}
+		else
+		{
+			printf("%lld %d is thinking", ft_gettime(), philo->id);
+			usleep(philo->param->time_eat + 2e4);
+		}
+	}
+}
+
 void	*philosophize(void *arg)
 {
 	t_philo	*philo;
 
 	philo = *(t_philo*)arg;
-	if (philo->param->death)
-		return ;
-	think(philo);
-	eat(philo);
-	sleep(philo);
+	smart_delay(philo);
+	while (!philo->param->death)
+	{
+		if (philo->param->death | take_fork(philo->left_fork, philo->id))
+			return ;
+		if (philo->param->death | take_fork(philo->right_fork, philo->id))
+			return ;
+		if (philo->param->death | eat(philo))
+			return ;
+		if (philo->param->death | sleep(philo))
+			return ;
+		printf("%lld %d is thinking", ft_gettime(), philo->id);
+	}
 }
 
 int	start_threads(t_param *p)
@@ -40,7 +65,7 @@ int	start_threads(t_param *p)
 	i = 0;
 	while (i < p->nb_philo)
 	{
-		if (pthread_create(&p->threads[i], NULL, foo, NULL))
+		if (pthread_create(&p->threads[i], NULL, philosophize, NULL))
 			{
 				perror("Fail create thread");
 				return 1;

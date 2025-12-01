@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 04:37:24 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/01 22:45:47 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 typedef struct	s_philo
 {
 	int				id;
-	int				last_eat;
-	int				ts;
+	long long		last_eat;
+	int				meals;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	t_param			*param;
@@ -34,6 +34,7 @@ typedef struct	s_parameter
 	int				time_eat;
 	int				time_sleep;
 	int				max_meals;
+	int				philo_full;
 	int				death;
 	pthread_t		*threads;
 	t_philo			*philos;
@@ -55,3 +56,4 @@ int	ft_atoi(char *s);
 void	print_s(t_param *s);
 void	free_param(t_param *p);
 long long	ft_gettime(void);
+void	ft_bzero(void *s, size_t n);

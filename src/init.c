@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 03:59:30 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/01 23:22:06 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,27 @@ void	init_philo(t_param *p)
 	{
 		p->philos[i].id = i + 1;
 		p->philo[i].param = p;
+		p->philo[i].meals = 0;
 		i++;
 	}
+}
+
+void	init_forks(t_param *p)
+{
+	int	i;
+
+	i = 0;
+	p->forks = malloc(sizeof(pthread_mutex_t) * p->nb_philo);
+	while (i < p->nb_philo)
+		pthread_mutex_init(&p->forks[i++], NULL);
+	i = 0;
+	while (i < p->nb_philo - 1)
+	{
+		p->philos[i].left_fork = &p->forks[i];
+		p->philos[i].right_fork = &p->forks[i + 1];
+		i++;
+	}
+	p->philos[i].right_fork = &p->forks[0];
 }
 
 void	init_table(t_param *p)

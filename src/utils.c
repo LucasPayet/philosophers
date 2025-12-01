@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 04:36:34 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/01 22:45:08 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ int	ft_atoi(char *s)
 		s++;
 	}
 	return (nb * sign);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*b;
+
+	b = (unsigned char *)s;
+	while (n--)
+	{
+		*b++ = 0;
+	}
 }
 
 long long	ft_gettime(void)
