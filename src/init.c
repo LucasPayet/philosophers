@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/18 15:53:25 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/01 03:59:30 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_philo(t_param *p)
 	while (i < p->nb_philo)
 	{
 		p->philos[i].id = i + 1;
+		p->philo[i].param = p;
 		i++;
 	}
 }
@@ -38,13 +39,14 @@ void	init_table(t_param *p)
 void	init_param(t_param *p, char **av)
 {
 	p->nb_philo = ft_atoi(av[1]);
-	p->time_die = ft_atoi(av[2]);
-	p->time_eat = ft_atoi(av[3]);
-	p->time_sleep = ft_atoi(av[4]);
+	p->time_die = ft_atoi(av[2]) * 1e3;
+	p->time_eat = ft_atoi(av[3] * 1e3);
+	p->time_sleep = ft_atoi(av[4] * 1e3);
 	if (av[5])
 		p->max_meals = ft_atoi(av[5]);
 	else
 		p->max_meals = -1;
+	p->death = 0;
 	p->threads = NULL;
 	p->philos = NULL;
 	p->forks = NULL;

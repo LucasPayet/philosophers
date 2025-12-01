@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/08 22:14:22 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/01 04:36:34 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,12 @@ int	ft_atoi(char *s)
 		s++;
 	}
 	return (nb * sign);
+}
+
+long long	ft_gettime(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1e6 + tv.tv_usec);
 }
