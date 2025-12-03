@@ -6,9 +6,11 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 22:45:08 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/03 13:56:49 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philo.h"
 
 static int	ft_isdigit(int c)
 {

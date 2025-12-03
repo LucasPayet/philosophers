@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 23:22:06 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/03 15:06:11 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_philo(t_param *p)
 {
 	int	i;
+	long long	t;
 
 	p->threads = malloc(sizeof(pthread_t) * p->nb_philo);
 	if (!p->threads)
@@ -23,11 +24,13 @@ void	init_philo(t_param *p)
 	if (!p->philos)
 		printf("malloc err\n");
 	i = 0;
+	t = ft_gettime();
 	while (i < p->nb_philo)
 	{
 		p->philos[i].id = i + 1;
-		p->philo[i].param = p;
-		p->philo[i].meals = 0;
+		p->philos[i].param = p;
+		p->philos[i].meals = 0;
+		p->philos[i].last_eat = t;
 		i++;
 	}
 }
@@ -47,6 +50,7 @@ void	init_forks(t_param *p)
 		p->philos[i].right_fork = &p->forks[i + 1];
 		i++;
 	}
+	p->philos[i].left_fork = &p->forks[p->nb_philo - 1];
 	p->philos[i].right_fork = &p->forks[0];
 }
 
@@ -59,8 +63,8 @@ void	init_param(t_param *p, char **av)
 {
 	p->nb_philo = ft_atoi(av[1]);
 	p->time_die = ft_atoi(av[2]) * 1e3;
-	p->time_eat = ft_atoi(av[3] * 1e3);
-	p->time_sleep = ft_atoi(av[4] * 1e3);
+	p->time_eat = ft_atoi(av[3]) * 1e3;
+	p->time_sleep = ft_atoi(av[4]) * 1e3;
 	if (av[5])
 		p->max_meals = ft_atoi(av[5]);
 	else
@@ -70,4 +74,5 @@ void	init_param(t_param *p, char **av)
 	p->philos = NULL;
 	p->forks = NULL;
 	init_philo(p);
+	init_forks(p);
 }

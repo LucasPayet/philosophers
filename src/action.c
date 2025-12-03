@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/01 23:31:21 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/03 16:01:51 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,25 @@ int	is_dead(t_philo *philo, long long t)
 {
 	if (t - philo->last_eat > philo->param->time_die)
 	{	
-		printf("%lld %d died\n", t, philo->id);
+		printf("\033[31m%lld %d died\033[0m\n", t, philo->id);
 		philo->param->death++;
 		return (1);
 	}
 	return (0);
 }
 
-void	take_fork(pthread_mutex_t *fork, int id)
+int	take_fork(pthread_mutex_t *fork, int id)
 {
 	pthread_mutex_lock(fork);
-	printf("%lld %d has taken a for\nk", ft_gettime(), id);
+	printf("%lld %d has taken a fork\n", ft_gettime(), id);
+	return (0);
+}
+
+int	lose_fork(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	return (0);
 }
 
 int	eat(t_philo *philo)
@@ -50,7 +58,7 @@ int	eat(t_philo *philo)
 	return (0);
 }
 
-int	sleep(t_philo *philo)
+int	philo_sleep(t_philo *philo)
 {
 	long long	t;
 
