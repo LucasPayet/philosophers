@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/04 15:24:10 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/04 16:58:41 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*philosophize(void *arg)
 
 	philo = (t_philo*)arg;
 	smart_delay(philo);
-	while (!check_stop(philo->param))
+	while (1)
 	{
 		if (take_fork(philo->left_fork, philo))
 			return (lose_fork(philo), NULL);
@@ -46,8 +46,8 @@ void	*philosophize(void *arg)
 			return (lose_fork(philo), NULL);
 		if (philo_sleep(philo))
 			return (lose_fork(philo), NULL);
-		if (!check_stop(philo->param))
-			printf("\033[34m%lld %d is thinking\n\033[0m", ft_gettime(), philo->id);
+		if (think(philo))
+			return (NULL);
 	}
 	return (NULL);
 }

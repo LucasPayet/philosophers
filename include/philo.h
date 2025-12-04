@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/04 15:08:47 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/04 16:57:53 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,14 @@ void	init_param(t_param *p, char **av);
 /* SIMULATION */
 void	simulation(t_param *p);
 int		check_stop(t_param *p);
-void	think(t_philo *philo);
+void    set_stop(t_param *p);
+int		think(t_philo *philo);
 int		take_fork(pthread_mutex_t *fork, t_philo *philo);
 int 	lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
+
+void	my_wait(long long t);
 
 /* UTILS */
 int	ft_atoi(char *s);

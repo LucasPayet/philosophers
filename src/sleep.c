@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stop.c                                             :+:      :+:    :+:   */
+/*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 14:29:48 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/04 16:17:03 by lupayet          ###   ########.fr       */
+/*   Created: 2025/12/04 16:49:32 by lupayet           #+#    #+#             */
+/*   Updated: 2025/12/04 16:59:39 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_stop(t_param *p)
+void	my_wait(long long t)
 {
-	pthread_mutex_lock(&p->stop_lock);
-	if (p->stop)
-	{
-		pthread_mutex_unlock(&p->stop_lock);
-		return (1);
-	}
-	pthread_mutex_unlock(&p->stop_lock);
-	return (0);
-}
-
-void	set_stop(t_param *p)
-{
-	p->stop++;
-	pthread_mutex_unlock(&p->stop_lock);
+	while (ft_gettime() < t)
+		usleep(10);
 }
