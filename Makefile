@@ -6,14 +6,14 @@
 #    By: lupayet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/07 14:45:40 by lupayet           #+#    #+#              #
-#    Updated: 2025/12/01 12:44:49 by lupayet          ###   ########.fr        #
+#    Updated: 2025/12/04 14:33:08 by lupayet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-SRC_F = main.c utils.c init.c debug.c clean.c simulation.c action.c
+SRC_F = main.c utils.c init.c debug.c clean.c simulation.c action.c stop.c
 SRC_DIR = ./src/
 OBJ_D = ./obj/
 INC = ./include/

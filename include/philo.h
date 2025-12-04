@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/03 16:10:11 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/04 15:08:47 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ struct	s_parameter
 	int				time_sleep;
 	int				max_meals;
 	int				philo_full;
-	pthread_mutex_t	death_lock;
-	int				death;
+	pthread_mutex_t	stop_lock;
+	int				stop;
 	pthread_t		*threads;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
@@ -50,8 +50,9 @@ void	init_param(t_param *p, char **av);
 
 /* SIMULATION */
 void	simulation(t_param *p);
+int		check_stop(t_param *p);
 void	think(t_philo *philo);
-int		take_fork(pthread_mutex_t *fork, int id);
+int		take_fork(pthread_mutex_t *fork, t_philo *philo);
 int 	lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);

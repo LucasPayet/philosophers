@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/03 15:06:11 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/04 14:35:57 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	init_param(t_param *p, char **av)
 		p->max_meals = ft_atoi(av[5]);
 	else
 		p->max_meals = -1;
-	p->death = 0;
+	pthread_mutex_init(&p->stop_lock, NULL);
+	p->stop = 0;
 	p->threads = NULL;
 	p->philos = NULL;
 	p->forks = NULL;
