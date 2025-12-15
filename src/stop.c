@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 14:29:48 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/04 16:17:03 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/13 04:10:07 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	check_stop(t_param *p)
 
 void	set_stop(t_param *p)
 {
+	pthread_mutex_lock(&p->stop_lock);
 	p->stop++;
 	pthread_mutex_unlock(&p->stop_lock);
 }
