@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/04 16:57:53 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/16 15:58:18 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ struct	s_parameter
 	pthread_mutex_t	stop_lock;
 	int				stop;
 	pthread_t		*threads;
+	pthread_t		admin;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 };
@@ -51,6 +52,7 @@ void	init_param(t_param *p, char **av);
 /* SIMULATION */
 void	simulation(t_param *p);
 int		check_stop(t_param *p);
+int 	is_dead(t_philo *philo, long long t);
 void    set_stop(t_param *p);
 int		think(t_philo *philo);
 int		take_fork(pthread_mutex_t *fork, t_philo *philo);
@@ -65,5 +67,6 @@ int	ft_atoi(char *s);
 
 void	print_s(t_param *s);
 void	free_param(t_param *p);
+void	destroy_mutex(t_param *p);
 long long	ft_gettime(void);
 void	ft_bzero(void *s, size_t n);

@@ -6,20 +6,11 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/05 16:17:55 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/16 16:25:10 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*foo(void *n)
-{
-	(void)n;
-	printf("start\n");
-	usleep(5000000);
-	printf("end\n");
-	return (NULL);
-}
 
 void	smart_delay(t_philo *philo)
 {
@@ -51,6 +42,33 @@ void	*philosophize(void *arg)
 	return (NULL);
 }
 
+void	*administer(void *arg)
+{
+	t_param		*p;
+	int			i;
+	long long	t;
+	t_philo		*philo;
+
+	p = (t_param*)arg;
+	i = 0;
+	while (1)
+	{
+		philo = &p->philos[i];
+		pthread_mutex_lock(&p->stop_lock);
+		t = ft_gettime();
+		if (is_dead(philo, t))
+			return (pthread_mutex_unlock(&p->stop_lock), NULL);
+		if (p->philo_full == p->nb_philo)
+			p->stop = 1;
+		pthread_mutex_unlock(&p->stop_lock);
+		if (i == p->nb_philo - 1)
+			i = 0;
+		else
+			i++;
+	}
+	return (NULL);
+}
+
 int	start_threads(t_param *p)
 {
 	int	i;
@@ -65,6 +83,11 @@ int	start_threads(t_param *p)
 			}
 		i++;
 	}
+	if (pthread_create(&p->admin, NULL, administer, p))
+	{
+		perror("Fail create thread");
+		return 1;
+	}
 	return (0);
 }
 	
@@ -78,6 +101,7 @@ void	wait_threads(t_param *p)
 		pthread_join(p->threads[i], NULL);
 		i++;
 	}
+	pthread_join(p->admin, NULL);
 }
 
 void	simulation(t_param *p)

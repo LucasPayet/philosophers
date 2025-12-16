@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:39:08 by lupayet           #+#    #+#             */
-/*   Updated: 2025/11/30 21:54:37 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/16 13:37:52 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av)
 	init_param(&param, av);
 	print_s(&param);
 	simulation(&param);
+	destroy_mutex(&param);
 	free_param(&param);
 	return (0);
 }

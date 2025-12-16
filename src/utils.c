@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/03 13:56:49 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/16 16:34:09 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ long long	ft_gettime(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1e6 + tv.tv_usec);
+	return (tv.tv_sec * 1000000 + tv.tv_usec);
 }
