@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/16 16:25:10 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/16 17:21:31 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	smart_delay(t_philo *philo)
 {
 	if (!(philo->id % 2))
 	{
-		my_wait(ft_gettime() + philo->param->time_eat);
+		my_wait(ft_gettime() + philo->param->time_eat / 5);
 	}
 }
 
@@ -65,6 +65,7 @@ void	*administer(void *arg)
 			i = 0;
 		else
 			i++;
+		usleep(100);
 	}
 	return (NULL);
 }

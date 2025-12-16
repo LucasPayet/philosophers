@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/16 16:07:51 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/16 16:54:22 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	init_table(t_param *p)
 void	init_param(t_param *p, char **av)
 {
 	p->nb_philo = ft_atoi(av[1]);
-	p->time_die = ft_atoi(av[2]) * 1e3;
-	p->time_eat = ft_atoi(av[3]) * 1e3;
-	p->time_sleep = ft_atoi(av[4]) * 1e3;
+	p->time_die = ft_atoi(av[2]);
+	p->time_eat = ft_atoi(av[3]);
+	p->time_sleep = ft_atoi(av[4]);
 	if (av[5])
 		p->max_meals = ft_atoi(av[5]);
 	else
