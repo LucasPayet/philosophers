@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/16 15:55:45 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/18 02:15:13 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	take_fork(pthread_mutex_t *fork, t_philo *philo)
 	if (philo->param->stop)
 		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
 	pthread_mutex_lock(fork);
-	printf("%lld %d has taken a fork\n", ft_gettime(), philo->id);
+	printf("%lld %d has taken a fork\n", t, philo->id);
 	pthread_mutex_unlock(&philo->param->stop_lock);
 	return (0);
 }
