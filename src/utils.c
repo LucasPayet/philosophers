@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/16 16:53:55 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/27 11:23:11 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,9 @@ long long	ft_gettime(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+int	diff(long long min, long long max)
+{
+	return ((int)(max - min));
 }

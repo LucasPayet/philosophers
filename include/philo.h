@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/16 15:58:18 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/27 11:16:56 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ struct	s_parameter
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
+	long	long	start;
 	int				max_meals;
 	int				philo_full;
 	pthread_mutex_t	stop_lock;
@@ -70,3 +71,4 @@ void	free_param(t_param *p);
 void	destroy_mutex(t_param *p);
 long long	ft_gettime(void);
 void	ft_bzero(void *s, size_t n);
+int		diff(long long min, long long max);

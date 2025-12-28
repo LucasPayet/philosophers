@@ -6,7 +6,7 @@
 #    By: lupayet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/07 14:45:40 by lupayet           #+#    #+#              #
-#    Updated: 2025/12/16 16:18:07 by lupayet          ###   ########.fr        #
+#    Updated: 2025/12/27 11:29:02 by lupayet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ $(OBJ_D):
 $(OBJ_D)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
-$(NAME): $(OBJ_D) $(OBJ)
+$(NAME): $(OBJ_D) $(OBJ) $(INC)philo.h
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:
