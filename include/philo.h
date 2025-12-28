@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/27 11:16:56 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/28 21:28:01 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		check_stop(t_param *p);
 int 	is_dead(t_philo *philo, long long t);
 void    set_stop(t_param *p);
 int		think(t_philo *philo);
-int		take_fork(pthread_mutex_t *fork, t_philo *philo);
+//int		take_fork(pthread_mutex_t *fork, t_philo *philo);
 int 	lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);

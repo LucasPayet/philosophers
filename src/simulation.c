@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/27 12:07:41 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 00:40:49 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ void	*philosophize(void *arg)
 
 	philo = (t_philo*)arg;
 	smart_delay(philo);
-	while (1)
+	while (!philo->param->stop || is_dead(philo, ft_gettime()))
 	{
-		if (take_fork(philo->left_fork, philo))
-			return (lose_fork(philo), NULL);
-		if (take_fork(philo->right_fork, philo))
-			return (lose_fork(philo), NULL);
 		if (eat(philo))
 			return (lose_fork(philo), NULL);
 		if (philo_sleep(philo))

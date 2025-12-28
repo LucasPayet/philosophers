@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/27 12:44:22 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 00:49:09 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,22 @@ int	is_dead(t_philo *philo, long long t)
 	return (0);
 }
 
-int	take_fork(pthread_mutex_t *fork, t_philo *philo)
+void	take_fork(t_philo *philo, t_param *param)
 {
-	long long	t;
-
-	pthread_mutex_lock(&philo->param->stop_lock);
-	t = ft_gettime();
-	if (philo->param->stop)
-		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
-	pthread_mutex_lock(fork);
-	printf("%d %d has taken a fork\n", diff(philo->param->start, t),
-		philo->id);
-	pthread_mutex_unlock(&philo->param->stop_lock);
-	return (0);
+	if (philo->id % 2)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		printf("%d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
+		pthread_mutex_lock(philo->left_fork);
+		printf("%d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		printf("%d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
+		pthread_mutex_lock(philo->right_fork);
+		printf("%d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
+	}
 }
 
 int	lose_fork(t_philo *philo)
@@ -49,16 +52,23 @@ int	lose_fork(t_philo *philo)
 int	eat(t_philo *philo)
 {
 	long long	t;
-
-	t = ft_gettime();
+	take_fork(philo, philo->param);
 	pthread_mutex_lock(&philo->param->stop_lock);
 	if (philo->param->stop)
 		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
+	t = ft_gettime();
 	printf("%d %d is eating\n", diff(philo->param->start, t), philo->id);
 	philo->last_eat = t;
 	philo->meals++;
 	if (philo->meals == philo->param->max_meals)
+	{
 		philo->param->philo_full++;
+		if (philo->param->philo_full == philo->param->nb_philo)
+		{
+			philo->param->stop = 1;
+			return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
+		}
+	}
 	pthread_mutex_unlock(&philo->param->stop_lock);
 	my_wait(t + philo->param->time_eat);
 	pthread_mutex_unlock(philo->left_fork);
