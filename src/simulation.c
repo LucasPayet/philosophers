@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 11:34:24 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 18:14:36 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	smart_delay(t_philo *philo)
 {
 	if (!(philo->id % 2))
 	{
-		my_wait(ft_gettime() + philo->param->time_eat / 5, NULL);
+		my_wait(ft_gettime() + philo->param->time_eat / 5);
 	}
 }
 
@@ -26,14 +26,15 @@ void	*philosophize(void *arg)
 
 	philo = (t_philo*)arg;
 	smart_delay(philo);
-	while (!philo->param->stop && !is_dead(philo, ft_gettime()))
+	while (1)
 	{
 		if (eat(philo))
-			return (lose_fork(philo), NULL);
+			return (NULL);
 		if (philo_sleep(philo))
-			return (lose_fork(philo), NULL);
+			return (NULL);
 		if (think(philo))
 			return (NULL);
+		usleep(500);
 	}
 	return (NULL);
 }
@@ -49,18 +50,23 @@ void	*administer(void *arg)
 	i = 0;
 	while (1)
 	{
-		philo = &p->philos[i];
+		i = 0;
 		pthread_mutex_lock(&p->stop_lock);
-		t = ft_gettime();
-		if (is_dead(philo, t))
-			return (pthread_mutex_unlock(&p->stop_lock), NULL);
-		if (p->philo_full == p->nb_philo)
-			p->stop = 1;
-		pthread_mutex_unlock(&p->stop_lock);
-		if (i == p->nb_philo - 1)
-			i = 0;
-		else
+		while (i < p->nb_philo)
+		{
+			if (p->stop)
+			{
+				return (pthread_mutex_unlock(&p->stop_lock), NULL);
+			}
+			philo = &p->philos[i];
+			t = ft_gettime();
+			if (is_dead(philo, t))
+				return (pthread_mutex_unlock(&p->stop_lock), NULL);
+			if (p->philo_full == p->nb_philo)
+				p->stop = 1;
 			i++;
+		}
+		pthread_mutex_unlock(&p->stop_lock);
 		usleep(100);
 	}
 	return (NULL);
@@ -81,11 +87,11 @@ int	start_threads(t_param *p)
 			}
 		i++;
 	}
-	/*if (pthread_create(&p->admin, NULL, administer, p))
+	if (pthread_create(&p->admin, NULL, administer, p))
 	{
 		perror("Fail create thread");
 		return 1;
-	}*/
+	}
 	return (0);
 }
 	
@@ -99,7 +105,7 @@ void	wait_threads(t_param *p)
 		pthread_join(p->threads[i], NULL);
 		i++;
 	}
-	//pthread_join(p->admin, NULL);
+	pthread_join(p->admin, NULL);
 }
 
 void	simulation(t_param *p)

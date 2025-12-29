@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/27 11:23:11 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 16:06:33 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-long long	ft_gettime(void)
+size_t	ft_gettime(void)
 {
 	struct timeval	tv;
 
@@ -64,7 +64,7 @@ long long	ft_gettime(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int	diff(long long min, long long max)
+int	ft_diff(size_t min, size_t max)
 {
 	return ((int)(max - min));
 }

@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 11:34:04 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 17:20:49 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct	s_parameter t_param;
 typedef struct	s_philo
 {
 	int				id;
-	long long		last_eat;
+	size_t		last_eat;
 	int				meals;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -36,7 +36,7 @@ struct	s_parameter
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
-	long	long	start;
+	size_t			start;
 	int				max_meals;
 	int				philo_full;
 	pthread_mutex_t	stop_lock;
@@ -53,7 +53,7 @@ void	init_param(t_param *p, char **av);
 /* SIMULATION */
 void	simulation(t_param *p);
 int		check_stop(t_param *p);
-int 	is_dead(t_philo *philo, long long t);
+int 	is_dead(t_philo *philo, size_t t);
 void    set_stop(t_param *p);
 int		think(t_philo *philo);
 //int		take_fork(pthread_mutex_t *fork, t_philo *philo);
@@ -61,7 +61,7 @@ int 	lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
 
-void	my_wait(long long t, t_philo *philo);
+void	my_wait(size_t t);
 
 /* UTILS */
 int	ft_atoi(char *s);
@@ -69,6 +69,8 @@ int	ft_atoi(char *s);
 void	print_s(t_param *s);
 void	free_param(t_param *p);
 void	destroy_mutex(t_param *p);
-long long	ft_gettime(void);
+size_t	ft_gettime(void);
 void	ft_bzero(void *s, size_t n);
-int		diff(long long min, long long max);
+int		ft_diff(size_t min, size_t max);
+
+int		message(char *msg, t_philo *philo, size_t t);

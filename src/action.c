@@ -6,53 +6,47 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 11:35:09 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 18:14:59 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	is_dead(t_philo *philo, long long t)
+int	is_dead(t_philo *philo, size_t t)
 {
-	printf("\033[0;31m%5lld %d\n\033[0m", t - philo->last_eat, philo->id);
-	if (t - philo->last_eat > philo->param->time_die)
+//	printf("\033[0;31m%5lu %lu %d\n\033[0m", t - philo->param->start, philo->last_eat - philo->param->start, philo->id);
+	if (t - philo->last_eat > (size_t)philo->param->time_die)
 	{
 		philo->param->stop = 1;
-		printf("\033[31m%d %d died\033[0m\n", diff(philo->param->start, t),
+	//	message("died", philo, t);
+		printf("\033[31m%5d %d died\033[0m\n", ft_diff(philo->param->start, t),
 			philo->id);
 		return (1);
 	}
 	return (0);
 }
 
-void	take_fork(t_philo *philo, t_param *param)
+int	take_fork(t_philo *philo)
 {
 	if (philo->id % 2)
 	{
-		if (!philo->param->stop && !is_dead(philo, ft_gettime()))
-		{
-			pthread_mutex_lock(philo->right_fork);
-			printf("%5d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
-		}
-		if (!philo->param->stop && !is_dead(philo, ft_gettime()))
-		{
-			pthread_mutex_lock(philo->left_fork);
-			printf("%5d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
-		}
+		pthread_mutex_lock(philo->right_fork);
+		if (message("has taken a fork", philo, ft_gettime()))
+			return (pthread_mutex_unlock(philo->right_fork), 1);
+		pthread_mutex_lock(philo->left_fork);
+		if (message("has taken a fork", philo, ft_gettime()))
+			return (pthread_mutex_unlock(philo->left_fork), 1);
 	}
 	else
 	{
-		if (!philo->param->stop && !is_dead(philo, ft_gettime()))
-		{
-			pthread_mutex_lock(philo->left_fork);
-			printf("%5d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
-		}
-		if (!philo->param->stop && !is_dead(philo, ft_gettime()))
-		{
-			pthread_mutex_lock(philo->right_fork);
-			printf("%5d %d has taken a fork\n", diff(param->start, ft_gettime()), philo->id);
-		}
+		pthread_mutex_lock(philo->left_fork);
+		if (message("has taken a fork", philo, ft_gettime()))
+			return (pthread_mutex_unlock(philo->left_fork), 1);
+		pthread_mutex_lock(philo->right_fork);
+		if (message("has taken a fork", philo, ft_gettime()))
+			return (pthread_mutex_unlock(philo->right_fork), 1);
 	}
+	return (0);
 }
 
 int	lose_fork(t_philo *philo)
@@ -64,16 +58,15 @@ int	lose_fork(t_philo *philo)
 
 int	eat(t_philo *philo)
 {
-	long long	t;
-	take_fork(philo, philo->param);
-	pthread_mutex_lock(&philo->param->stop_lock);
+	size_t	t;
+	if (take_fork(philo))
+		return (1);
 	t = ft_gettime();
-	if (philo->param->stop || is_dead(philo, t))
-		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
-	printf("%5d %d is eating\n", diff(philo->param->start, t), philo->id);
+	if (message("is eating", philo, t))
+		return (lose_fork(philo), 1);
 	philo->last_eat = t;
 	philo->meals++;
-	if (philo->meals == philo->param->max_meals)
+/*	if (philo->meals == philo->param->max_meals)
 	{
 		philo->param->philo_full++;
 		if (philo->param->philo_full == philo->param->nb_philo)
@@ -81,9 +74,9 @@ int	eat(t_philo *philo)
 			philo->param->stop = 1;
 			return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
 		}
-	}
-	pthread_mutex_unlock(&philo->param->stop_lock);
-	my_wait(t + philo->param->time_eat, philo);
+	}*/
+	my_wait(t + philo->param->time_eat);
+	//printf("\033[0;31m%lu %d\n\033[0m", ft_gettime() - philo->param->start, philo->id);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return (0);
@@ -91,27 +84,25 @@ int	eat(t_philo *philo)
 
 int	philo_sleep(t_philo *philo)
 {
-	long long	t;
+	size_t	t;
 
 	t = ft_gettime();
-	pthread_mutex_lock(&philo->param->stop_lock);
-	if (philo->param->stop)
-		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
-	printf("%5d %d is sleeping\n", diff(philo->param->start, t), philo->id);
-	pthread_mutex_unlock(&philo->param->stop_lock);
-	my_wait(t + philo->param->time_sleep, philo);
+	if (message("is sleeping", philo, t))
+		return (1);
+	my_wait(t + philo->param->time_sleep);
 	return (0);
 }
 
 int	think(t_philo *philo)
 {
-	long long	t;
+	size_t	t;
 
+//	pthread_mutex_lock(&philo->param->stop_lock);
+//	if (philo->param->stop)
+//		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
 	t = ft_gettime();
-	pthread_mutex_lock(&philo->param->stop_lock);
-	if (philo->param->stop)
-		return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
-	printf("%5d %d is thinking\n", diff(philo->param->start, t), philo->id);
-	pthread_mutex_unlock(&philo->param->stop_lock);
+	if (message("is thinking", philo, t))
+		return (1);
+//	pthread_mutex_unlock(&philo->param->stop_lock);
 	return (0);
 }
