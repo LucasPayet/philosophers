@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/28 21:28:01 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 11:34:04 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int 	lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
 
-void	my_wait(long long t);
+void	my_wait(long long t, t_philo *philo);
 
 /* UTILS */
 int	ft_atoi(char *s);

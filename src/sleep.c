@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 16:49:32 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/16 17:14:49 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/29 11:33:24 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	my_wait(long long t)
 		usleep(100);
 }
 */
-void my_wait(long long t)
+void my_wait(long long t, t_philo *philo)
 {
     long long now;
 
-    while ((now = ft_gettime()) < t)
+    while ((now = ft_gettime()) < t && (philo && !is_dead(philo, now)))
     {
         long long remaining = t - now;
 
