@@ -6,23 +6,23 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 17:34:06 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/30 17:24:21 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_philo(t_param *p)
+int	init_philo(t_param *p)
 {
-	int	i;
-	long long	t;
+	int		i;
+	size_t	t;
 
 	p->threads = malloc(sizeof(pthread_t) * p->nb_philo);
 	if (!p->threads)
-		printf("malloc err\n");
+		return (printf("malloc err\n"), 0);
 	p->philos = malloc(sizeof(t_philo) * p->nb_philo);
 	if (!p->philos)
-		printf("malloc err\n");
+		return (printf("malloc err\n"), 0);
 	i = 0;
 	t = ft_gettime();
 	while (i < p->nb_philo)
@@ -33,9 +33,10 @@ void	init_philo(t_param *p)
 		p->philos[i].last_eat = t;
 		i++;
 	}
+	return (1);
 }
 
-void	init_forks(t_param *p)
+int	init_forks(t_param *p)
 {
 	int	i;
 
@@ -52,21 +53,20 @@ void	init_forks(t_param *p)
 	}
 	p->philos[i].left_fork = &p->forks[p->nb_philo - 1];
 	p->philos[i].right_fork = &p->forks[0];
+	return (1);
 }
 
-void	init_table(t_param *p)
+int	init_param(t_param *p, char **av)
 {
-	init_philo(p);
-} 
-
-void	init_param(t_param *p, char **av)
-{
-	p->nb_philo = ft_atoi(av[1]);
-	p->time_die = ft_atoi(av[2]);
-	p->time_eat = ft_atoi(av[3]);
-	p->time_sleep = ft_atoi(av[4]);
+	p->nb_philo = safe_atoi(av[1]);
+	p->time_die = safe_atoi(av[2]);
+	p->time_eat = safe_atoi(av[3]);
+	p->time_sleep = safe_atoi(av[4]);
+	if (p->nb_philo == -1 || p->time_die == -1 || p->time_eat == -1
+		|| p->time_sleep == -1)
+		return (0);
 	if (av[5])
-		p->max_meals = ft_atoi(av[5]);
+		p->max_meals = safe_atoi(av[5]);
 	else
 		p->max_meals = -1;
 	pthread_mutex_init(&p->stop_lock, NULL);
@@ -74,6 +74,7 @@ void	init_param(t_param *p, char **av)
 	p->threads = NULL;
 	p->philos = NULL;
 	p->forks = NULL;
-	init_philo(p);
-	init_forks(p);
+	if (!init_philo(p) || !init_forks(p))
+		return (0);
+	return (1);
 }

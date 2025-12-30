@@ -6,26 +6,21 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 18:14:36 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/30 15:22:42 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	smart_delay(t_philo *philo)
-{
-	if (!(philo->id % 2))
-	{
-		my_wait(ft_gettime() + philo->param->time_eat / 5);
-	}
-}
-
 void	*philosophize(void *arg)
 {
 	t_philo	*philo;
 
-	philo = (t_philo*)arg;
-	smart_delay(philo);
+	philo = (t_philo *)arg;
+	if (!(philo->id % 2))
+	{
+		my_wait(ft_gettime() + philo->param->time_eat / 5);
+	}
 	while (1)
 	{
 		if (eat(philo))
@@ -43,11 +38,9 @@ void	*administer(void *arg)
 {
 	t_param		*p;
 	int			i;
-	long long	t;
 	t_philo		*philo;
 
-	p = (t_param*)arg;
-	i = 0;
+	p = (t_param *)arg;
 	while (1)
 	{
 		i = 0;
@@ -55,12 +48,9 @@ void	*administer(void *arg)
 		while (i < p->nb_philo)
 		{
 			if (p->stop)
-			{
 				return (pthread_mutex_unlock(&p->stop_lock), NULL);
-			}
 			philo = &p->philos[i];
-			t = ft_gettime();
-			if (is_dead(philo, t))
+			if (is_dead(philo, ft_gettime()))
 				return (pthread_mutex_unlock(&p->stop_lock), NULL);
 			if (p->philo_full == p->nb_philo)
 				p->stop = 1;
@@ -81,20 +71,20 @@ int	start_threads(t_param *p)
 	while (i < p->nb_philo)
 	{
 		if (pthread_create(&p->threads[i], NULL, philosophize, &p->philos[i]))
-			{
-				perror("Fail create thread");
-				return 1;
-			}
+		{
+			perror("Fail create thread");
+			return (1);
+		}
 		i++;
 	}
 	if (pthread_create(&p->admin, NULL, administer, p))
 	{
 		perror("Fail create thread");
-		return 1;
+		return (1);
 	}
 	return (0);
 }
-	
+
 void	wait_threads(t_param *p)
 {
 	int	i;

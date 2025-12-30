@@ -6,27 +6,20 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 14:29:48 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/13 04:10:07 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/30 15:05:31 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_stop(t_param *p)
+int	is_dead(t_philo *philo, size_t t)
 {
-	pthread_mutex_lock(&p->stop_lock);
-	if (p->stop)
+	if (t - philo->last_eat > (size_t)philo->param->time_die)
 	{
-		pthread_mutex_unlock(&p->stop_lock);
+		philo->param->stop = 1;
+		printf("\033[31m%5d %d died\033[0m\n", ft_diff(philo->param->start, t),
+			philo->id);
 		return (1);
 	}
-	pthread_mutex_unlock(&p->stop_lock);
 	return (0);
-}
-
-void	set_stop(t_param *p)
-{
-	pthread_mutex_lock(&p->stop_lock);
-	p->stop++;
-	pthread_mutex_unlock(&p->stop_lock);
 }

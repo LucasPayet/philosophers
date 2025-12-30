@@ -6,28 +6,31 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 17:20:49 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/30 17:44:25 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <pthread.h>
-#include <sys/time.h>
-#include <stddef.h>
+#ifndef PHILO_H
+# define PHILO_H
 
-typedef struct	s_parameter t_param;
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <stddef.h>
 
-typedef struct	s_philo
+typedef struct s_parameter	t_param;
+
+typedef struct s_philo
 {
-	int				id;
-	size_t		last_eat;
-	int				meals;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	struct s_parameter		*param;
+	int					id;
+	size_t				last_eat;
+	int					meals;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	struct s_parameter	*param;
 }	t_philo;
 
 struct	s_parameter
@@ -48,29 +51,30 @@ struct	s_parameter
 };
 
 /* INIT */
-void	init_param(t_param *p, char **av);
+int		init_param(t_param *p, char **av);
 
 /* SIMULATION */
 void	simulation(t_param *p);
 int		check_stop(t_param *p);
-int 	is_dead(t_philo *philo, size_t t);
-void    set_stop(t_param *p);
+int		is_dead(t_philo *philo, size_t t);
+void	set_stop(t_param *p);
 int		think(t_philo *philo);
-//int		take_fork(pthread_mutex_t *fork, t_philo *philo);
-int 	lose_fork(t_philo *philo);
+int		lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
 
 void	my_wait(size_t t);
 
 /* UTILS */
-int	ft_atoi(char *s);
-
+long	ft_atol(char *s);
+int		safe_atoi(char *s);
 void	print_s(t_param *s);
 void	free_param(t_param *p);
 void	destroy_mutex(t_param *p);
 size_t	ft_gettime(void);
-void	ft_bzero(void *s, size_t n);
 int		ft_diff(size_t min, size_t max);
 
+/* MESSAGE */
 int		message(char *msg, t_philo *philo, size_t t);
+
+#endif

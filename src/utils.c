@@ -6,63 +6,11 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:02:36 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/29 16:06:33 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/30 17:43:16 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	ft_isdigit(int c)
-{
-	return (c >= 48 && c <= 57);
-}
-
-static int	ft_isspace(int c)
-{
-	return ((c >= '\t' && c <= '\r') || c == ' ');
-}
-
-int	ft_atoi(char *s)
-{
-	int	nb;
-	int	sign;
-
-	nb = 0;
-	sign = 1;
-	while (ft_isspace(*s))
-		s++;
-	if (*s == '+' || *s == '-')
-	{
-		if (*s == '-')
-			sign = -1;
-		s++;
-	}
-	while (ft_isdigit(*s))
-	{
-		nb = nb * 10 + *s - 48;
-		s++;
-	}
-	return (nb * sign);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*b;
-
-	b = (unsigned char *)s;
-	while (n--)
-	{
-		*b++ = 0;
-	}
-}
-
-size_t	ft_gettime(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
 
 int	ft_diff(size_t min, size_t max)
 {
