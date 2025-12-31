@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/30 15:08:52 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/31 15:59:52 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,20 @@ int	eat(t_philo *philo)
 	t = ft_gettime();
 	if (message("is eating", philo, t))
 		return (lose_fork(philo), 1);
+	pthread_mutex_lock(&philo->param->stop_lock);
 	philo->last_eat = t;
 	philo->meals++;
 	if (philo->meals == philo->param->max_meals)
 	{
-		pthread_mutex_lock(&philo->param->stop_lock);
 		philo->param->philo_full++;
 		if (philo->param->philo_full == philo->param->nb_philo)
 		{
 			philo->param->stop = 1;
+			lose_fork(philo);
 			return (pthread_mutex_unlock(&philo->param->stop_lock), 1);
 		}
-		pthread_mutex_unlock(&philo->param->stop_lock);
 	}
+	pthread_mutex_unlock(&philo->param->stop_lock);
 	my_wait(t + philo->param->time_eat);
 	lose_fork(philo);
 	return (0);

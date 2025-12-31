@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/31 14:11:11 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/31 15:30:34 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	init_param(t_param *p, char **av)
 	p->threads = NULL;
 	p->philos = NULL;
 	p->forks = NULL;
+	p->philo_full = 0;
+	pthread_mutex_init(&p->stop_lock, NULL);
 	if (!init_philo(p) || !init_forks(p))
 		return (0);
 	return (1);

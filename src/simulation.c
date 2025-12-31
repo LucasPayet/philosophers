@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/31 13:54:40 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/31 16:06:22 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*philosophize(void *arg)
 	}
 	if (!(philo->id % 2))
 	{
-		my_wait(ft_gettime() + philo->param->time_eat / 5);
+		my_wait(ft_gettime() + 100);
 	}
 	while (1)
 	{
