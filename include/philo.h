@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:43:57 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/30 17:44:25 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/31 13:59:25 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		think(t_philo *philo);
 int		lose_fork(t_philo *philo);
 int		eat(t_philo *philo);
 int		philo_sleep(t_philo *philo);
+void	solo_philo(t_philo *philo);
 
 void	my_wait(size_t t);
 

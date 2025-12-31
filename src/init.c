@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/30 17:24:21 by lupayet          ###   ########.fr       */
+/*   Updated: 2025/12/31 14:11:11 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	init_forks(t_param *p)
 int	init_param(t_param *p, char **av)
 {
 	p->nb_philo = safe_atoi(av[1]);
+	if (p->nb_philo == 0)
+		return (0);
 	p->time_die = safe_atoi(av[2]);
 	p->time_eat = safe_atoi(av[3]);
 	p->time_sleep = safe_atoi(av[4]);
@@ -68,7 +70,9 @@ int	init_param(t_param *p, char **av)
 	if (av[5])
 		p->max_meals = safe_atoi(av[5]);
 	else
-		p->max_meals = -1;
+		p->max_meals = -2;
+	if (p->max_meals == -1)
+		return (0);
 	pthread_mutex_init(&p->stop_lock, NULL);
 	p->stop = 0;
 	p->threads = NULL;
