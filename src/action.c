@@ -6,11 +6,18 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/31 15:59:52 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/04 00:14:53 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	lose_fork(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	return (0);
+}
 
 int	take_fork(t_philo *philo)
 {
@@ -21,7 +28,7 @@ int	take_fork(t_philo *philo)
 			return (pthread_mutex_unlock(philo->right_fork), 1);
 		pthread_mutex_lock(philo->left_fork);
 		if (message("has taken a fork", philo, ft_gettime()))
-			return (pthread_mutex_unlock(philo->left_fork), 1);
+			return (lose_fork(philo), 1);
 	}
 	else
 	{
@@ -30,15 +37,8 @@ int	take_fork(t_philo *philo)
 			return (pthread_mutex_unlock(philo->left_fork), 1);
 		pthread_mutex_lock(philo->right_fork);
 		if (message("has taken a fork", philo, ft_gettime()))
-			return (pthread_mutex_unlock(philo->right_fork), 1);
+			return (lose_fork(philo), 1);
 	}
-	return (0);
-}
-
-int	lose_fork(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
 	return (0);
 }
 

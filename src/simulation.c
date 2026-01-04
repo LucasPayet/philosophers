@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/31 16:06:22 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/04 01:23:37 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ void	*philosophize(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	my_wait(philo->param->start);
 	if (philo->param->nb_philo == 1)
-	{
-		solo_philo(philo);
-		return (NULL);
-	}
+		return(solo_philo(philo), NULL);
 	if (!(philo->id % 2))
 	{
 		my_wait(ft_gettime() + 100);
@@ -46,6 +44,7 @@ void	*administer(void *arg)
 	t_philo		*philo;
 
 	p = (t_param *)arg;
+	my_wait(p->start);
 	while (1)
 	{
 		i = 0;
@@ -72,7 +71,7 @@ int	start_threads(t_param *p)
 	int	i;
 
 	i = 0;
-	p->start = ft_gettime();
+	//p->start = ft_gettime();
 	while (i < p->nb_philo)
 	{
 		if (pthread_create(&p->threads[i], NULL, philosophize, &p->philos[i]))
