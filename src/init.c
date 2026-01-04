@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/04 00:40:08 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/04 06:48:13 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_philo(t_param *p)
 	if (!p->philos)
 		return (printf("malloc err\n"), 0);
 	i = 0;
-	t = ft_gettime() + 100;
+	t = ft_gettime();
 	p->start = t;
 	while (i < p->nb_philo)
 	{
