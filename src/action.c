@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/04 08:13:51 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/07 15:10:02 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	lose_fork(t_philo *philo)
 
 int	take_fork(t_philo *philo)
 {
-	if (!(philo->id % 2) || philo->right_fork < philo->left_fork)
+	if (!(philo->id % 2))
 	{
 		pthread_mutex_lock(philo->right_fork);
 		if (message("has taken a right fork", philo, ft_gettime()))
@@ -84,9 +84,22 @@ int	philo_sleep(t_philo *philo)
 int	think(t_philo *philo)
 {
 	size_t	t;
+	int		t_think;
+	int		calc;
 
 	t = ft_gettime();
 	if (message("is thinking", philo, t))
 		return (1);
-	return (0);
+	else
+		return (0);
+	if (!(philo->param->nb_philo % 2))
+		return (1);
+	t_think = philo->param->time_eat * 2 - philo->param->time_sleep;
+	calc = philo->param->time_eat * 2 + philo->param->time_sleep;
+	if (t_think < 0)
+		return (1);
+	if (philo->param->time_die < calc)
+		return (1);
+	my_wait(t + t_think);
+	return (1);
 }

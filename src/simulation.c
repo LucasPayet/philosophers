@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/04 08:19:36 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/07 16:40:21 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	*philosophize(void *arg)
 		return(solo_philo(philo), NULL);
 	if (!(philo->id % 2))
 		my_wait(ft_gettime() + philo->param->time_eat / 2);
-	if (philo->param->nb_philo % 2 && philo->id == philo->param->nb_philo)
-		my_wait(ft_gettime() + philo->param->time_eat + (philo->param->time_eat / 2));
+	//if (philo->param->nb_philo % 2 && philo->id == philo->param->nb_philo)
+	//	my_wait(ft_gettime() + philo->param->time_eat / 2);
 	while (1)
 	{
 		if (eat(philo))
@@ -49,6 +49,7 @@ void	*administer(void *arg)
 	{
 		i = 0;
 		pthread_mutex_lock(&p->stop_lock);
+		//printf("START %d\n", ft_diff(p->start, ft_gettime()));
 		while (i < p->nb_philo)
 		{
 			if (p->stop)
@@ -60,8 +61,10 @@ void	*administer(void *arg)
 				p->stop = 1;
 			i++;
 		}
+		//printf("END %d\n", ft_diff(p->start, ft_gettime()));
 		pthread_mutex_unlock(&p->stop_lock);
-		usleep(100);
+		//usleep(500);
+		my_wait(ft_gettime() + p->time_die);
 	}
 	return (NULL);
 }
