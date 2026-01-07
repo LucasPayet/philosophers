@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/07 15:10:02 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/08 00:21:50 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,15 @@ int	think(t_philo *philo)
 	t = ft_gettime();
 	if (message("is thinking", philo, t))
 		return (1);
-	else
+	if (philo->param->nb_philo % 2 == 0)
 		return (0);
-	if (!(philo->param->nb_philo % 2))
-		return (1);
 	t_think = philo->param->time_eat * 2 - philo->param->time_sleep;
 	calc = philo->param->time_eat * 2 + philo->param->time_sleep;
 	if (t_think < 0)
-		return (1);
+		return (0);
 	if (philo->param->time_die < calc)
-		return (1);
+		return (0);
 	my_wait(t + t_think);
-	return (1);
+	//printf("%d\n", philo->id);
+	return (0);
 }

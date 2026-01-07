@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/07 16:40:21 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/07 23:34:35 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*philosophize(void *arg)
 			return (NULL);
 		if (think(philo))
 			return (NULL);
-		usleep(500);
+		//usleep(500);
 	}
 	return (NULL);
 }
@@ -63,8 +63,8 @@ void	*administer(void *arg)
 		}
 		//printf("END %d\n", ft_diff(p->start, ft_gettime()));
 		pthread_mutex_unlock(&p->stop_lock);
-		//usleep(500);
-		my_wait(ft_gettime() + p->time_die);
+		usleep(100);
+		//my_wait(ft_gettime() + 100);
 	}
 	return (NULL);
 }
