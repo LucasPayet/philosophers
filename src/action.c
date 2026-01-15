@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 03:22:03 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/08 00:21:50 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/15 10:36:32 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,5 @@ int	think(t_philo *philo)
 	if (philo->param->time_die < calc)
 		return (0);
 	my_wait(t + t_think);
-	//printf("%d\n", philo->id);
 	return (0);
 }

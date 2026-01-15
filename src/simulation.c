@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/07 23:34:35 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/15 10:37:35 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@ void	*philosophize(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	//my_wait(philo->param->start);
 	if (philo->param->nb_philo == 1)
-		return(solo_philo(philo), NULL);
+		return (solo_philo(philo), NULL);
 	if (!(philo->id % 2))
 		my_wait(ft_gettime() + philo->param->time_eat / 2);
-	//if (philo->param->nb_philo % 2 && philo->id == philo->param->nb_philo)
-	//	my_wait(ft_gettime() + philo->param->time_eat / 2);
 	while (1)
 	{
 		if (eat(philo))
@@ -32,7 +29,6 @@ void	*philosophize(void *arg)
 			return (NULL);
 		if (think(philo))
 			return (NULL);
-		//usleep(500);
 	}
 	return (NULL);
 }
@@ -44,12 +40,10 @@ void	*administer(void *arg)
 	t_philo		*philo;
 
 	p = (t_param *)arg;
-	//my_wait(p->start);
 	while (1)
 	{
 		i = 0;
 		pthread_mutex_lock(&p->stop_lock);
-		//printf("START %d\n", ft_diff(p->start, ft_gettime()));
 		while (i < p->nb_philo)
 		{
 			if (p->stop)
@@ -61,10 +55,8 @@ void	*administer(void *arg)
 				p->stop = 1;
 			i++;
 		}
-		//printf("END %d\n", ft_diff(p->start, ft_gettime()));
 		pthread_mutex_unlock(&p->stop_lock);
 		usleep(100);
-		//my_wait(ft_gettime() + 100);
 	}
 	return (NULL);
 }
@@ -74,7 +66,6 @@ int	start_threads(t_param *p)
 	int	i;
 
 	i = 0;
-	//p->start = ft_gettime();
 	while (i < p->nb_philo)
 	{
 		if (pthread_create(&p->threads[i], NULL, philosophize, &p->philos[i]))
