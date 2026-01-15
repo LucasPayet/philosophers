@@ -6,13 +6,13 @@
 #    By: lupayet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/07 14:45:40 by lupayet           #+#    #+#              #
-#    Updated: 2026/01/15 13:55:48 by lupayet          ###   ########.fr        #
+#    Updated: 2026/01/15 14:35:53 by lupayet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 SRC_F = main.c utils.c init.c debug.c clean.c simulation.c action.c stop.c \
 		time.c message.c safe_atoi.c solo.c
 SRC_DIR = ./src/
