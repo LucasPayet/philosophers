@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/15 10:37:35 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/15 11:37:27 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	wait_threads(t_param *p)
 
 void	simulation(t_param *p)
 {
-	start_threads(p);
+	if (start_threads(p))
+			return ;
 	wait_threads(p);
 }

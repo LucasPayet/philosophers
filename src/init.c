@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:41:12 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/04 06:48:13 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/15 11:20:56 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	init_philo(t_param *p)
 
 	p->threads = malloc(sizeof(pthread_t) * p->nb_philo);
 	if (!p->threads)
-		return (printf("malloc err\n"), 0);
+		return (0);
 	p->philos = malloc(sizeof(t_philo) * p->nb_philo);
 	if (!p->philos)
-		return (printf("malloc err\n"), 0);
+		return (free(p->threads), 0);
 	i = 0;
 	t = ft_gettime();
 	p->start = t;
@@ -65,14 +65,14 @@ int	init_param(t_param *p, char **av)
 	p->time_die = safe_atoi(av[2]);
 	p->time_eat = safe_atoi(av[3]);
 	p->time_sleep = safe_atoi(av[4]);
-	if (p->nb_philo == -1 || p->time_die == -1 || p->time_eat == -1
-		|| p->time_sleep == -1)
+	if (p->nb_philo < 0 || p->time_die < 0 || p->time_eat < 0
+		|| p->time_sleep < 0)
 		return (0);
 	if (av[5])
 		p->max_meals = safe_atoi(av[5]);
 	else
 		p->max_meals = -2;
-	if (p->max_meals == -1)
+	if (p->max_meals < -2 || p->max_meals == -1)
 		return (0);
 	pthread_mutex_init(&p->stop_lock, NULL);
 	p->stop = 0;
