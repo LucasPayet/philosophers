@@ -6,7 +6,7 @@
 /*   By: lupayet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 16:49:32 by lupayet           #+#    #+#             */
-/*   Updated: 2025/12/30 16:28:11 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/15 12:53:26 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,3 @@ size_t	ft_gettime(void)
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
-/*
-void my_wait(size_t t)
-{
-	size_t now;
-	size_t remaining;
-
-	while ((now = ft_gettime()) < t)
-	{
-		remaining = t - now;
-		if (remaining > 1000)
-			usleep(remaining / 2);
-		else
-			usleep(100);
-	}
-}*/

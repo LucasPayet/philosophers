@@ -6,7 +6,7 @@
 /*   By: lupayet <lupayet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 16:47:30 by lupayet           #+#    #+#             */
-/*   Updated: 2026/01/15 11:37:27 by lupayet          ###   ########.fr       */
+/*   Updated: 2026/01/15 14:11:34 by lupayet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,11 @@ int	start_threads(t_param *p)
 	while (i < p->nb_philo)
 	{
 		if (pthread_create(&p->threads[i], NULL, philosophize, &p->philos[i]))
-		{
-			perror("Fail create thread");
 			return (1);
-		}
 		i++;
 	}
 	if (pthread_create(&p->admin, NULL, administer, p))
-	{
-		perror("Fail create thread");
 		return (1);
-	}
 	return (0);
 }
 
@@ -99,6 +93,6 @@ void	wait_threads(t_param *p)
 void	simulation(t_param *p)
 {
 	if (start_threads(p))
-			return ;
+		return ;
 	wait_threads(p);
 }
